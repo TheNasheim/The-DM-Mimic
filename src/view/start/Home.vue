@@ -1,40 +1,67 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 
 </script>
 
 <template>
-    <div>
+  <div class="home">
+    <div class="header">
       <img src="../../assets/The_DM_Mimic.png" class="logo" alt="DM Mimic logo" />
-      <svg xmlns="http://www.w3.org/2000/svg" class="logo" width="18" height="18" viewBox="0 0 24 24"><path d="M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z"/></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="logo"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+      >
+        <path d="M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z" />
+      </svg>
     </div>
-  
-    <div class="Home-Buttons">
-        <router-link to="/login"><button type="button">Login</button></router-link>
-        <router-link to="/signup"><button type="button">Signup</button></router-link>
-        <router-link to="/screen"><button type="button">Screen</button></router-link>
+
+    <div class="home-buttons">
+      <router-link to="/login"><button type="button">Login</button></router-link>
+      <router-link to="/signup"><button type="button">Signup</button></router-link>
+      <router-link to="/screen"><button type="button">Screen</button></router-link>
+      <router-link to="/testpage"><button type="button">Test Page</button></router-link>
     </div>
+  </div>
 </template>
-  
+
 <style lang="scss">
+.home {
+    width: 100%;
+    height: 100%;
+    background-image: url("/src/assets/dice.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.header {
+    margin-bottom: 150px;
+    padding: 1.5em;
+    will-change: filter;
+}
 .logo {
-  height: 10em;
-  padding: 1.5em;
-  will-change: filter;
-  top: 100px;
-  position: absolute;
-  transform: translate(-50%, -50%);
+    height: 10em;
+    top: 100px;
+    position: absolute;
+    transform: translate(-50%, -50%);
 }
 
+img {
+  z-index: 2;
+}
 svg {
   width: 168px;
   height: 196px;
   transform: translate(-50%, -50%) rotate(30deg);
   animation: glow 5s linear infinite alternate;
   filter: blur(10px);
-  z-index: -10;
+  z-index: 1;
   fill: #7539e4d2;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 @keyframes glow {
@@ -46,7 +73,7 @@ svg {
     filter: blur(50px);
   }
 }
-img:hover+svg {
+img:hover + svg {
   fill: rgba(244, 66, 232, 1);
 }
 .logo:hover {
@@ -55,10 +82,10 @@ img:hover+svg {
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #2848daaa);
 }
-.Home-Buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 150px;
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
 }
 </style>

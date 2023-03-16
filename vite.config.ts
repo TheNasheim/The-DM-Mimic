@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import { resolve } from "path";
 import vue from '@vitejs/plugin-vue'
@@ -10,12 +11,12 @@ export default defineConfig({
             input: {
                 "the-dm-mimic": resolve(
                     __dirname,
-                    "the-dm-mimic.html"
+                    "index.html"
                 ),
             },
             output: {
                 globals: {
-                    "Health.json": "applicationHealthTextItems",
+                    "DMMimic.json": "applicationDMTextItems",
                 },
                 entryFileNames: `[name].js`,
                 chunkFileNames: `[name].js`,

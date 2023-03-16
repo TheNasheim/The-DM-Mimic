@@ -3,12 +3,14 @@ import Home from '../view/start/Home.vue'
 import Login from '../view/start/Login.vue'
 import Signup from '../view/start/Signup.vue'
 import Screen from '../view/start/Screen.vue'
+import TestPage from '../view/start/TestPage.vue'
 
 const routes = [
     { path: '/', name: 'Home', component: Home },
     { path: '/login', name: 'Login', component: Login },
     { path: '/signup', name: 'Signup', component: Signup },
     { path: '/screen', name: 'Screen', component: Screen },
+    { path: '/testpage', name: 'TestPage', component: TestPage },
 ]
 
 const router = createRouter({

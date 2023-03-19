@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+import {
+    DmButton,
+} from "../../common/components";
 </script>
 
 <template>
@@ -18,10 +20,11 @@
     </div>
 
     <div class="home-buttons">
-      <router-link to="/login"><button type="button">Login</button></router-link>
-      <router-link to="/signup"><button type="button">Signup</button></router-link>
-      <router-link to="/screen"><button type="button">Screen</button></router-link>
-      <router-link to="/testpage"><button type="button">Test Page</button></router-link>
+      <DmButton type="button"><router-link to="/login">Login</router-link></DmButton>
+      <DmButton type="button"><router-link to="/signup">Signup</router-link></DmButton>
+      <DmButton type="button"><router-link to="/screen">Screen</router-link></DmButton>
+      <DmButton type="button"><router-link to="/testchat">TestChat</router-link></DmButton>
+      <DmButton type="button"><router-link to="/testpage">Test Page</router-link></DmButton>
     </div>
   </div>
 </template>
@@ -87,5 +90,7 @@ img:hover + svg {
   flex-direction: column;
   justify-content: space-between;
   height: 200px;
+  margin: 5px;
+  align-items: center;
 }
 </style>

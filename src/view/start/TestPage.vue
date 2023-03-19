@@ -92,8 +92,8 @@ const Buttonpress = () => {
                     @update:model-value="Buttonpress()" />
             </template>
         </DmGridLayout>
-        <DmButton @on:click="Buttonpress()" size="medium" :full-width="true">
-                    DmButton Full Width needs to be fixed #top-content-full
+        <DmButton @on:click="Buttonpress()" size="small" :full-width="true">
+                    DmButton Full Width needs to be fixed
                 </DmButton>
         <DmButton @on:click="Buttonpress()" size="large" :full-width="true">
                     <router-link to="/">Home</router-link>

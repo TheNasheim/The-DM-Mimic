@@ -1,38 +1,48 @@
+
+  
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useChatStore } from '../../stores/chatStore';
+    import { defineProps, onUnmounted } from 'vue';
+    import { useChatStore } from '../../stores/chatStore';
+    import { useLobbyStore } from '../../stores/lobbyStore';
+    import ChatInput from '@/components/ChatInput.vue';
+    import LobbyInput from '@/components/LobbyInput.vue';
+    import ChatMessages from '@/components/ChatMessages.vue';
+
+    const props = defineProps({
+    messages: {
+        type: Array as () => string[],
+        required: true
+    }
+    });
 
     const chatStore = useChatStore();
+    const lobbyStore = useLobbyStore();
 
-    const message = ref('');
-
-    const sendMessage = () => {
-      const newMessage = {
-        id: new Date().getTime(),
-        text: message.value,
-      };
-      chatStore.addMessage(newMessage);
-      message.value = '';
+    const sendMessage = (message: string) => {
+    chatStore.sendMessage(message);
     };
 
-    const messages = computed(() => chatStore.messages)
+    const joinLobby = (username: string) => {
+    lobbyStore.setUsername(username);
+    chatStore.connectSocket();
+    };
+
+    // Disconnect socket when component is unmounted
+    onUnmounted(() => {
+        chatStore.disconnectSocket();
+    });
 </script>
 
-<template>  
-    <div class="card">
-        <h1>Chat App</h1>
-    <div v-for="message in messages" :key="message.id">
-      <p>{{ message.text }}</p>
-    </div>
-    <form @submit.prevent="sendMessage">
-      <input type="text" v-model="message" />
-      <button type="submit">Send</button>
-    </form>
-
-        
-      <router-link to="/"><button type="button">Home</button></router-link>
+<template>
+    <div>
+        <h2>Chat</h2>
+            <div v-if="!lobbyStore.username">
+                <LobbyInput @join-lobby="joinLobby" />
+            </div>
+        <div v-else>
+            <p>Logged in as {{ lobbyStore.username }}</p>
+            <ChatMessages :messages="chatStore.messages" />
+            <ChatInput @send-message="sendMessage" />
+        </div>
     </div>
 </template>
-  
-<style lang="scss">
-</style>

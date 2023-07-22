@@ -11,7 +11,7 @@ interface DmButtonProps {
     variant?: string,
 }
 const props = defineProps<DmButtonProps>();
-const emit = defineEmits(["on:Click", "on:FocusChange", "update:modelValue"]);
+const emit = defineEmits(["clicked"]);
 
 const colorIn = () => {
     if(props.color === undefined) { 
@@ -37,7 +37,7 @@ const buttonClasses = computed(() => ({
 
 const handleButtonClick = () => {
     if(!props.disabled) {
-        emit("on:Click")
+        emit("clicked")
     }
 };
 </script>
@@ -58,71 +58,85 @@ const handleButtonClick = () => {
 
 <style lang="scss">
 .dm-button {
-  align-items: center;
-  background-color: transparent;
-  border-radius: .625rem;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-flex;
-  justify-content: center;
-  line-height: normal;
-  min-width: 235px;
-  max-width: 235px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  height: 54px;
-  font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
-  &:visited {
-    color: rgb(255,255,255);
-  }
-
-  &:hover {
-    text-decoration: none;
-  }
-
-
-  &__content {
+    position: static;
     align-items: center;
-    display: flex;
+    background-color: transparent;
+    border-radius: .625rem;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
     justify-content: center;
-  }
-
-  &--small {
-    font-size: 5px;
-    height: 40px;
-  }
-
-  &--medium {
-    font-size: 15px;
-    height: 54px;
-  }
-
-  &--large {
+    line-height: normal;
+    min-width: 235px;
+    max-width: 235px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    height: 169px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
     font-size: 25px;
-    line-height: px-to-rem(20);
-    height: 64px;
-  }
+    margin-bottom: 10px;
+    height: 54px;
 
-  &--x-large {
-    font-size: 45px;
-    line-height: px-to-rem(24);
-    height: px-to-rem(74);
-  }
+    a {
+        font-weight: 900;
+        color: #fff;
+        text-decoration: inherit;
+    }
+    a:hover {
+        color: #fff;
+    }
 
-  &--full-width {
-    min-width: auto;
-    width: 100%;
-  }
+    &:visited {
+        color: rgb(255,255,255);
+    }
 
-  &--rounded {
-    border-radius: px-to-rem(54);
-  }
+    &:hover {
+        text-decoration: none;
+    }
 
-  &--shadow {
-    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18);
-  }
+
+    &__content {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    &--small {
+        font-size: 5px;
+        height: 40px;
+    }
+
+    &--medium {
+        font-size: 1rem;
+        height: 54px;
+    }
+
+    &--large {
+        font-size: 25px;
+        line-height: px-to-rem(20);
+        height: 64px;
+    }
+
+    &--x-large {
+        font-size: 45px;
+        line-height: px-to-rem(24);
+        height: px-to-rem(74);
+    }
+
+    &--full-width {
+        min-width: auto;
+        width: 100%;
+    }
+
+    &--rounded {
+        border-radius: px-to-rem(54);
+    }
+
+    &--shadow {
+        box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18);
+    }
 
   &--primary-solid {
     background-color: #f00;

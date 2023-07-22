@@ -13,14 +13,13 @@ import {
         class="logo"
         width="18"
         height="18"
-        viewBox="0 0 24 24"
-      >
+        viewBox="0 0 24 24">
         <path d="M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z" />
       </svg>
     </div>
 
     <div class="home-buttons">
-      <DmButton type="button"><router-link to="/login">Login</router-link></DmButton>
+      <DmButton size="medium" type="button"><router-link to="/login">Login</router-link></DmButton>
       <DmButton type="button"><router-link to="/signup">Signup</router-link></DmButton>
       <DmButton type="button"><router-link to="/screen">Screen</router-link></DmButton>
       <DmButton type="button"><router-link to="/testchat">TestChat</router-link></DmButton>
@@ -42,8 +41,10 @@ import {
     top: 0px;
 }
 .header {
-    margin-bottom: 150px;
-    padding: 1.5em;
+    width: 100%;
+    margin-left: 50%;
+    margin-right: 50%;
+    margin-bottom: 220px;
     will-change: filter;
 }
 .logo {

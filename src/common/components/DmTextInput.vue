@@ -1,46 +1,100 @@
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { defineProps } from 'vue';
-interface DmTextInputProps {
-    modelValue: string;
-    placeholder?: string;
-    min?: string;
-    max?: string;
-}
-const props = defineProps<DmTextInputProps>();
+
+const props = defineProps({
+    isInvalid: { type: Boolean, default: false },
+    autocomplete: { type: String, default: 'on' },
+    leftSideIcon: { type: String, default: '' },
+    max: { type: String, default: '' },
+    maxLength: { type: Number, default: undefined },
+    min: { type: String, default: '' },
+    modelValue: { type: String, default: '' },
+    placeholder: { type: String, default: '' },
+    size: {type: String, default: 'normal',
+        validator: (val: string) =>
+          ["smal", "normal", "large"].includes(val)
+    },
+    type: { 
+        type: String, 
+        required: true,
+        validator: (val: string) =>
+          ["number", "text", "date", "tel", "email"].includes(val), 
+    },
+    allowPaste: { type: Boolean, default: true },
+});
 const emit = defineEmits(["on:Blur", "on:FocusChange", "update:modelValue"]);
-const handleInput = (event: Event) =>
-    (event.target as HTMLInputElement).value;
 
 const getPlaceholderClasses = () => {
     let classes = "";
-    if(inputValue.value !== "") {
-        classes = "dm-text-input__placeholder--animate"
-    }
+    if (
+          (hasValue.value &&
+            props.type != "date" &&
+            props.placeholder)
+        ) {
+          classes += "dm-text-input__placeholder--animate ";
+        }
     return classes;
 }
+const hasValue = computed(() => {
+        return props.modelValue && props.modelValue != "";
+      });
 
-const inputValue = computed({
-    get: () => props.modelValue,
-    set: (newValue) => emit("update:modelValue", newValue),
-});
+
+const getInputClasses = () => {
+        let classes = "";
+        if (props.isInvalid) {
+          classes = "th-v-text-input__input--errorBorder ";
+        }
+        if (
+          (hasValue.value &&
+            props.type != "date" &&
+            props.placeholder)
+        ) {
+          classes += "dm-text-input__input--animate ";
+        }
+  
+        return classes;
+      };
+
+const handleInput = (event: Event) => {
+    console.log(`test1: ${props.modelValue}`);
+    (event.target as HTMLInputElement).value;
+}
+
+const handleOnBlur = () => {
+        emit("on:Blur");
+      };
 </script>
 
 <template>
     <div class="dm-text-input__container">
         <input 
+            :aria-invalid="isInvalid ? 'true' : undefined"
             class="dm-text-input__input"
-            :value="inputValue"
-            :min="props.min"
-            :max="props.max"
-            @blur="emit('on:Blur')"
-            @focus="emit('on:FocusChange')"
-            @input="emit('update:modelValue', handleInput($event))"
-        />
-        <div class="dm-text-input__placeholder"
-            :class="getPlaceholderClasses()">
-            <span> {{ placeholder }} </span>
+            :class="[ getInputClasses(), leftSideIcon ? 'dm-text-input__input--icon' : '' ]"
+            :style="leftSideIcon ? `background-image: url(${leftSideIcon})` : ``"
+            :type="type"
+            :min="min"
+            :max="max"
+            :maxlength="maxLength"
+            :value="modelValue"
+            :placeholder="type == 'date' ? placeholder : ''"
+            :autocomplete="autocomplete"
+            :onpaste="allowPaste ? '' : 'return false'"
+            @blur="handleOnBlur"
+            @focus="$emit('focus')"
+            @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)">
+
+        <div v-if="type != 'date'"
+            class="dm-text-input__placeholder"
+            :class="getPlaceholderClasses()"
+            data-placeholder="Placeholder" >
+            <span :class="isInvalid
+              ? 'dm-text-input__placeholder--validation-error-icon'
+              : ''">
+          {{ placeholder }}
+        </span>
         </div>
     </div>
 </template>
@@ -55,7 +109,6 @@ const inputValue = computed({
 
   &__input {
     box-sizing: border-box;
-    -moz-appearance: textfield;
     color: rgb(39,39,39);
     border-radius: .625rem;
     border: rgb(57, 57, 57) solid rgb(57, 57, 57);
@@ -70,7 +123,7 @@ const inputValue = computed({
     }
 
     &::placeholder {
-      color: rgb(99, 99, 99);
+      color: #999;
     }
 
     &::-webkit-outer-spin-button,
@@ -116,18 +169,17 @@ const inputValue = computed({
 
   &__placeholder {
     position: absolute;
-    top: 16px;
-    bottom: 0;
-    left: grey;
-    width: 100%;
+    top: 17px;
+    left: 18px;
     pointer-events: none;
     font-size: 1rem;
-    color: rgb(99, 99, 99);
-    transition: all 0.2s linear;
+    color: #999;
+    transition: all 0.1s linear;
+    text-align: center;
 
     &--animate {
-      font-size: 12px;
-      top: 5px;
+      font-size: 0.75rem;
+      top: 0.3125rem;
     }
 
     &--icon {
